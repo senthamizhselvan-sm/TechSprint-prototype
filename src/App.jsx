@@ -9,11 +9,14 @@ import Map from './components/Map';
 import Report from './components/Report';
 import Insights from './components/Insights';
 import Profile from './components/Profile';
+import ApiTest from './components/ApiTest';
 import './App.css';
 
-// Import API tests in development
+// Import API tests in development - disabled quickApiTest to prevent quota issues
 if (import.meta.env.DEV) {
   import('./utils/apiTest.js');
+  import('./utils/manualApiTest.js'); // Manual testing utilities available in console
+  // import('./utils/quickApiTest.js'); // Disabled to prevent quota exhaustion
 }
 
 const ProtectedRoute = ({ children }) => {
@@ -55,6 +58,10 @@ function App() {
                 <Profile />
               </ProtectedRoute>
             } />
+            {/* API Test Route - Development Only */}
+            {import.meta.env.DEV && (
+              <Route path="/api-test" element={<ApiTest />} />
+            )}
           </Routes>
         </div>
       </Router>

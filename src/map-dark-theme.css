@@ -1,0 +1,930 @@
+/* ===== MODERN DARK UI FOR MAP COMPONENT ===== */
+
+/* Dark theme variables */
+:root {
+  --dark-bg-primary: #1a1a1a;
+  --dark-bg-secondary: #2d2d2d;
+  --dark-bg-surface: #333333;
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #e0e0e0;
+  --dark-text-tertiary: #b0b0b0;
+  --dark-border: #404040;
+  --dark-accent: #4a9eff;
+  --dark-success: #4caf50;
+  --dark-warning: #ff9800;
+  --dark-error: #f44336;
+  --dark-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --dark-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Override existing page styles for map */
+.map-page {
+  min-height: 100vh !important;
+  background: linear-gradient(135deg, var(--dark-bg-primary) 0%, #0f0f0f 100%) !important;
+  color: var(--dark-text-primary) !important;
+  padding: 20px 16px 100px !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+/* Header styling */
+.map-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: var(--dark-bg-secondary);
+  border-radius: 16px;
+  box-shadow: var(--dark-shadow);
+  border: 1px solid var(--dark-border);
+}
+
+.map-header h1 {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--dark-text-primary) !important;
+  margin-bottom: 8px !important;
+  background: linear-gradient(135deg, var(--dark-accent), #64b5f6) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.map-header p {
+  font-size: 1.1rem !important;
+  color: var(--dark-text-secondary) !important;
+  opacity: 0.9 !important;
+  margin: 0 !important;
+}
+/* Location status card */
+.location-status-card {
+  background: var(--dark-bg-secondary) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  margin: 20px 0 !important;
+  box-shadow: var(--dark-shadow) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+.status-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.status-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.status-item.loading {
+  background: rgba(74, 158, 255, 0.1) !important;
+  border: 1px solid var(--dark-accent) !important;
+}
+
+.status-item.error {
+  background: rgba(244, 67, 54, 0.1) !important;
+  border: 1px solid var(--dark-error) !important;
+}
+
+.status-item.success {
+  background: rgba(76, 175, 80, 0.1) !important;
+  border: 1px solid var(--dark-success) !important;
+}
+
+.status-icon {
+  font-size: 24px !important;
+  min-width: 32px !important;
+  text-align: center !important;
+}
+
+.status-icon.pulsing {
+  animation: pulse 2s ease-in-out infinite !important;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.status-content {
+  flex: 1 !important;
+}
+
+.status-title {
+  font-weight: 600 !important;
+  color: var(--dark-text-primary) !important;
+  margin-bottom: 4px !important;
+  font-size: 1rem !important;
+}
+
+.status-subtitle {
+  font-size: 0.9rem !important;
+  color: var(--dark-text-secondary) !important;
+  line-height: 1.4 !important;
+}
+/* Filters card */
+.filters-card {
+  background: var(--dark-bg-secondary) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  margin: 20px 0 !important;
+  box-shadow: var(--dark-shadow) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+.filter-group {
+  margin-bottom: 16px !important;
+}
+
+.filter-group:last-child {
+  margin-bottom: 0 !important;
+}
+
+.filter-group label {
+  display: block !important;
+  margin-bottom: 8px !important;
+  font-weight: 600 !important;
+  color: var(--dark-text-primary) !important;
+  font-size: 0.9rem !important;
+}
+
+.filter-group select {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  background: var(--dark-bg-surface) !important;
+  border: 2px solid var(--dark-border) !important;
+  border-radius: 12px !important;
+  color: var(--dark-text-primary) !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+  appearance: none !important;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline></svg>') !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
+}
+
+.filter-group select:focus {
+  outline: none !important;
+  border-color: var(--dark-accent) !important;
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2) !important;
+}
+
+.filter-group select option {
+  background: var(--dark-bg-surface) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.view-toggle {
+  display: flex !important;
+  gap: 8px !important;
+  margin-top: 16px !important;
+}
+
+.view-toggle .btn {
+  flex: 1 !important;
+  padding: 12px 16px !important;
+  font-size: 0.9rem !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid var(--dark-border) !important;
+  background: var(--dark-bg-surface) !important;
+  color: var(--dark-text-secondary) !important;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  min-height: auto !important;
+}
+
+.view-toggle .btn:hover {
+  background: var(--dark-bg-secondary) !important;
+  border-color: var(--dark-accent) !important;
+  color: var(--dark-text-primary) !important;
+  transform: translateY(-2px) !important;
+}
+
+.view-toggle .btn-primary {
+  background: var(--dark-accent) !important;
+  border-color: var(--dark-accent) !important;
+  color: white !important;
+}
+
+.view-toggle .btn-primary:hover {
+  background: #3d8bfd !important;
+  border-color: #3d8bfd !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-small {
+  padding: 8px 12px !important;
+  font-size: 0.8rem !important;
+  min-height: auto !important;
+  border-radius: 8px !important;
+  border: 2px solid var(--dark-border) !important;
+  background: var(--dark-bg-surface) !important;
+  color: var(--dark-text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-small:hover {
+  background: var(--dark-bg-secondary) !important;
+  border-color: var(--dark-accent) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.btn-primary.btn-small {
+  background: var(--dark-accent) !important;
+  border-color: var(--dark-accent) !important;
+  color: white !important;
+}
+
+.btn-secondary.btn-small {
+  background: var(--dark-bg-surface) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+/* Loading shops indicator */
+.loading-shops {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  background: var(--dark-bg-secondary);
+  border-radius: 12px;
+  margin: 16px 0;
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text-secondary);
+}
+
+.loading-icon {
+  font-size: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Results info */
+.results-info {
+  text-align: center;
+  padding: 12px;
+  background: var(--dark-bg-surface);
+  border-radius: 10px;
+  margin: 16px 0;
+  color: var(--dark-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--dark-border);
+}
+
+/* Map and list content container */
+.map-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  margin: 20px 0 !important;
+  min-height: 500px !important;
+}
+
+.map-content.both {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+  min-height: 600px !important;
+}
+
+.map-content.map {
+  display: block !important;
+}
+
+.map-content.list {
+  display: block !important;
+}
+
+/* Map container - CRITICAL FIX */
+.map-container {
+  background: var(--dark-bg-secondary) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+  border: 2px solid var(--dark-border) !important;
+  height: 500px !important;
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+}
+
+.map-content.both .map-container {
+  height: 600px !important;
+}
+
+.map-content.map .map-container {
+  height: 70vh !important;
+  min-height: 500px !important;
+}
+
+/* Ensure Leaflet map fills container */
+.map-container .leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 16px !important;
+  background: #2d2d2d !important;
+}
+
+/* Fix for map tiles loading */
+.leaflet-tile-pane {
+  filter: brightness(0.8) contrast(1.2) !important;
+}
+
+/* Map popup styling - Enhanced */
+.leaflet-popup-content-wrapper {
+  background: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-primary) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+  border: 1px solid var(--dark-border) !important;
+  min-width: 200px !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--dark-bg-secondary) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--dark-text-primary) !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: var(--dark-accent) !important;
+}
+
+.map-popup {
+  padding: 16px !important;
+  min-width: 200px !important;
+}
+
+.map-popup h3 {
+  color: var(--dark-text-primary) !important;
+  margin: 0 0 8px 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+.map-popup p {
+  color: var(--dark-text-secondary) !important;
+  margin: 4px 0 !important;
+  font-size: 0.9rem !important;
+}
+
+.user-popup {
+  border-left: 4px solid var(--dark-accent) !important;
+}
+
+.shop-popup {
+  border-left: 4px solid var(--dark-success) !important;
+}
+/* Shops list container */
+.shops-list-container {
+  background: var(--dark-bg-secondary) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: var(--dark-shadow) !important;
+  border: 1px solid var(--dark-border) !important;
+  max-height: 600px !important;
+  overflow-y: auto !important;
+}
+
+.shops-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+/* Shop card styling */
+.shop-card {
+  background: var(--dark-bg-surface) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid var(--dark-border) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.shop-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, var(--dark-accent), var(--dark-success)) !important;
+  transform: scaleX(0) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.shop-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+  border-color: var(--dark-accent) !important;
+  background: linear-gradient(135deg, var(--dark-bg-surface) 0%, rgba(74, 158, 255, 0.05) 100%) !important;
+}
+
+.shop-card:hover::before {
+  transform: scaleX(1) !important;
+}
+
+.shop-card.selected {
+  border-color: var(--dark-accent) !important;
+  background: linear-gradient(135deg, var(--dark-bg-surface) 0%, rgba(74, 158, 255, 0.1) 100%) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+}
+
+.shop-card.selected::before {
+  transform: scaleX(1) !important;
+}
+
+.shop-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.shop-info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex: 1 !important;
+}
+
+.shop-icon {
+  width: 48px !important;
+  height: 48px !important;
+  background: linear-gradient(135deg, var(--dark-accent), var(--dark-success)) !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  color: white !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3) !important;
+}
+
+.shop-details {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.shop-details h3 {
+  margin: 0 0 4px 0 !important;
+  color: var(--dark-text-primary) !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.shop-category {
+  margin: 0 0 4px 0 !important;
+  color: var(--dark-accent) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.shop-address {
+  margin: 0 0 2px 0 !important;
+  color: var(--dark-text-secondary) !important;
+  font-size: 0.85rem !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.shop-hours {
+  margin: 0 !important;
+  color: var(--dark-text-tertiary) !important;
+  font-size: 0.8rem !important;
+  font-style: italic !important;
+}
+/* Shop distance info */
+.shop-distance {
+  text-align: right;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.distance {
+  background: linear-gradient(135deg, var(--dark-accent), var(--dark-success));
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
+}
+
+.tap-hint {
+  font-size: 0.75rem;
+  color: var(--dark-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.shop-card:hover .tap-hint {
+  color: var(--dark-accent);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--dark-text-secondary);
+  background: var(--dark-bg-surface);
+  border-radius: 16px;
+  border: 2px dashed var(--dark-border);
+  margin: 20px 0;
+}
+
+.empty-state p {
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .map-page {
+    padding: 16px 12px 100px;
+  }
+  
+  .map-header {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .map-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .location-status-card,
+  .filters-card {
+    padding: 16px;
+    margin: 16px 0;
+  }
+  
+  .map-content.both {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .map-container {
+    height: 350px;
+  }
+  
+  .shop-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .shop-info {
+    width: 100%;
+  }
+  
+  .shop-distance {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .shop-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 10px;
+  }
+  
+  .shops-list-container {
+    max-height: 400px;
+    padding: 16px;
+  }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .map-content.both {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .map-container {
+    height: 450px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+  .map-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  
+  .map-content.both .map-container {
+    height: 700px;
+  }
+  
+  .shops-list-container {
+    max-height: 700px;
+  }
+  
+  .filters-card {
+    display: flex;
+    align-items: end;
+    gap: 24px;
+  }
+  
+  .filter-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .view-toggle {
+    margin-top: 0;
+    flex-shrink: 0;
+    min-width: 300px;
+  }
+}
+/* Shop fetch error styling */
+.shop-fetch-error {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid var(--dark-error);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.error-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.error-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.error-text {
+  flex: 1;
+}
+
+.error-text h4 {
+  margin: 0 0 4px 0;
+  color: var(--dark-text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.error-text p {
+  margin: 0;
+  color: var(--dark-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.demo-notice {
+  color: var(--dark-warning);
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+/* Additional mobile adjustments for error handling */
+@media (max-width: 768px) {
+  .error-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .error-text {
+    text-align: center;
+  }
+}
+/* Critical overrides to ensure map visibility */
+.leaflet-control-zoom {
+  border: none !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: var(--dark-bg-secondary) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 28px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: var(--dark-bg-surface) !important;
+  color: var(--dark-accent) !important;
+}
+
+.leaflet-control-attribution {
+  background-color: rgba(45, 45, 45, 0.9) !important;
+  color: var(--dark-text-secondary) !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--dark-border) !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--dark-accent) !important;
+}
+
+/* Ensure map tiles are visible */
+.leaflet-tile {
+  filter: brightness(0.9) contrast(1.1) !important;
+}
+
+/* Loading and error states */
+.loading-shops {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 20px !important;
+  background: var(--dark-bg-secondary) !important;
+  border-radius: 12px !important;
+  margin: 16px 0 !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+.loading-icon {
+  font-size: 20px !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.results-info {
+  text-align: center !important;
+  padding: 12px !important;
+  background: var(--dark-bg-surface) !important;
+  border-radius: 10px !important;
+  margin: 16px 0 !important;
+  color: var(--dark-text-secondary) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+/* Shop fetch error styling */
+.shop-fetch-error {
+  background: rgba(244, 67, 54, 0.1) !important;
+  border: 1px solid var(--dark-error) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  margin: 16px 0 !important;
+}
+
+.error-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.error-icon {
+  font-size: 24px !important;
+  flex-shrink: 0 !important;
+}
+
+.error-text {
+  flex: 1 !important;
+}
+
+.error-text h4 {
+  margin: 0 0 4px 0 !important;
+  color: var(--dark-text-primary) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.error-text p {
+  margin: 0 !important;
+  color: var(--dark-text-secondary) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+}
+
+.demo-notice {
+  color: var(--dark-warning) !important;
+  font-style: italic !important;
+  font-size: 0.8rem !important;
+}
+
+/* Shop distance info */
+.shop-distance {
+  text-align: right !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+}
+
+.distance {
+  background: linear-gradient(135deg, var(--dark-accent), var(--dark-success)) !important;
+  color: white !important;
+  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3) !important;
+}
+
+.tap-hint {
+  font-size: 0.75rem !important;
+  color: var(--dark-text-tertiary) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  font-weight: 500 !important;
+}
+
+.shop-card:hover .tap-hint {
+  color: var(--dark-accent) !important;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center !important;
+  padding: 40px 20px !important;
+  color: var(--dark-text-secondary) !important;
+  background: var(--dark-bg-surface) !important;
+  border-radius: 16px !important;
+  border: 2px dashed var(--dark-border) !important;
+  margin: 20px 0 !important;
+}
+
+.empty-state p {
+  margin: 0 0 20px 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+}
+
+/* Force dark theme on all map elements */
+.map-page * {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--dark-accent) var(--dark-bg-primary) !important;
+}
+
+.map-page *::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.map-page *::-webkit-scrollbar-track {
+  background: var(--dark-bg-primary) !important;
+  border-radius: 4px !important;
+}
+
+.map-page *::-webkit-scrollbar-thumb {
+  background: var(--dark-accent) !important;
+  border-radius: 4px !important;
+}
+
+.map-page *::-webkit-scrollbar-thumb:hover {
+  background: #3d8bfd !important;
+}

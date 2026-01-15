@@ -1,0 +1,167 @@
+# Vercel Deployment Guide for Price Fixing Detector
+
+## Prerequisites
+1. GitHub account
+2. Vercel account (free tier available at https://vercel.com)
+3. Your project code pushed to GitHub
+
+## Step 1: Prepare Your Repository
+
+### 1.1 Environment Variables Setup
+Your .env file contains sensitive API keys. DO NOT commit this to GitHub.
+
+Create a .env.example file for reference:
+```
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+
+# Cloudinary Configuration
+VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+VITE_CLOUDINARY_API_KEY=your_cloudinary_api_key
+VITE_CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+
+# Gemini API Configuration
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 1.2 Add .env to .gitignore
+Ensure your .gitignore file includes:
+```
+.env
+.env.local
+.env.production
+.env.staging
+```
+
+### 1.3 Push to GitHub
+```bash
+git add .
+git commit -m "Prepare for Vercel deployment"
+git push origin main
+```
+
+## Step 2: Deploy to Vercel
+
+### 2.1 Connect Your Repository
+1. Go to https://vercel.com
+2. Sign up/Login with your GitHub account
+3. Click "New Project"
+4. Import your GitHub repository "TechSprint-prototype"
+
+### 2.2 Configure Build Settings
+Vercel should auto-detect your React project. Verify these settings:
+- **Framework Preset**: Vite
+- **Root Directory**: ./price-fixing-detector (if in a subfolder)
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Install Command**: `npm install`
+
+### 2.3 Add Environment Variables
+In Vercel dashboard, go to Settings > Environment Variables and add:
+
+**Production Environment Variables:**
+```
+VITE_FIREBASE_API_KEY = AIzaSyCvLFrvhSUUetpnl0CdO8XqYsT10n_Jc4g
+VITE_FIREBASE_AUTH_DOMAIN = price-fixing-detector.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID = price-fixing-detector
+VITE_FIREBASE_STORAGE_BUCKET = price-fixing-detector.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID = 535059206750
+VITE_FIREBASE_APP_ID = 1:535059206750:web:2b47a58295dc848a471acf
+
+VITE_CLOUDINARY_CLOUD_NAME = ddiakulkp
+VITE_CLOUDINARY_API_KEY = 347386436729432
+VITE_CLOUDINARY_API_SECRET = t2FtQp_ov5lhu6NuuvG3uqmi4fw
+VITE_CLOUDINARY_UPLOAD_PRESET = price_detector_uploads
+
+VITE_GEMINI_API_KEY = AIzaSyDOniiRw-n33175yjuCankaREwsGiOQFEU
+```
+
+**Important**: Set these for "Production", "Preview", and "Development" environments.
+
+### 2.4 Deploy
+1. Click "Deploy"
+2. Wait for build to complete (usually 2-3 minutes)
+3. Your app will be available at: https://your-project-name.vercel.app
+
+## Step 3: Post-Deployment Configuration
+
+### 3.1 Update Firebase Settings
+1. Go to Firebase Console > Authentication > Authorized Domains
+2. Add your Vercel domain: `your-project-name.vercel.app`
+
+### 3.2 Update Cloudinary Settings (if needed)
+1. Go to Cloudinary Console > Settings > Security
+2. Add your domain to allowed origins if using restricted uploads
+
+### 3.3 Test Your Deployment
+- Visit your Vercel URL
+- Test user registration/login
+- Test price reporting functionality
+- Test map functionality
+- Test insights page
+
+## Step 4: Custom Domain (Optional)
+
+### 4.1 Add Custom Domain
+1. In Vercel dashboard, go to Settings > Domains
+2. Add your custom domain
+3. Update DNS records as instructed by Vercel
+
+### 4.2 Update Firebase Authorized Domains
+Add your custom domain to Firebase authorized domains
+
+## Step 5: Monitoring & Maintenance
+
+### 5.1 Vercel Analytics
+- Enable analytics in Vercel dashboard for usage insights
+- Monitor Core Web Vitals and performance metrics
+
+### 5.2 Error Monitoring
+- Check Vercel Functions tab for any runtime errors
+- Monitor Firebase console for database errors
+
+### 5.3 Automatic Deployments
+- Vercel automatically deploys when you push to main branch
+- Preview deployments created for pull requests
+
+## Common Issues & Solutions
+
+### Build Failures
+- Check build logs in Vercel dashboard
+- Ensure all dependencies are in package.json
+- Verify environment variables are set correctly
+
+### Runtime Errors
+- Check browser console for client-side errors
+- Verify API keys and Firebase configuration
+- Ensure all external services are accessible
+
+### Performance Issues
+- Optimize images and assets
+- Enable Vercel's Image Optimization
+- Use lazy loading for heavy components
+
+## Security Checklist
+
+✅ .env file not committed to repository
+✅ Environment variables properly configured in Vercel
+✅ Firebase security rules configured
+✅ HTTPS enabled (automatic with Vercel)
+✅ API keys restricted to specific domains
+✅ CSP headers configured in vercel.json
+
+## Support Resources
+
+- Vercel Documentation: https://vercel.com/docs
+- Vite Deployment Guide: https://vitejs.dev/guide/static-deploy.html#vercel
+- Firebase Hosting: https://firebase.google.com/docs/hosting
+
+## Estimated Deployment Time: 15-30 minutes
+
+Your Price Fixing Detector app should now be live and accessible worldwide!
