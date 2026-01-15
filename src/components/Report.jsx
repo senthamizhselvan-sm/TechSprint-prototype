@@ -14,6 +14,9 @@ const Report = () => {
   
   const [selectedShop, setSelectedShop] = useState(location.state?.selectedShop || null);
   const [product, setProduct] = useState('');
+  const [customProduct, setCustomProduct] = useState('');
+  const [productUnit, setProductUnit] = useState('');
+  const [isCustomProduct, setIsCustomProduct] = useState(false);
   const [price, setPrice] = useState('');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -207,8 +210,13 @@ const Report = () => {
       return;
     }
     
-    if (!selectedShop || !product || !price) {
+    if (!selectedShop || (!product && !customProduct) || !price) {
       setError('Please fill all required fields');
+      return;
+    }
+    
+    if (isCustomProduct && (!customProduct.trim() || !productUnit.trim())) {
+      setError('Please enter product name and unit for custom product');
       return;
     }
     
@@ -246,12 +254,17 @@ const Report = () => {
       
       setUploadProgress(75);
       
-      const selectedProduct = allProducts.find(p => p.id === product);
+      const finalProduct = isCustomProduct ? customProduct.toLowerCase().replace(/\s+/g, '_') : product;
+      const finalProductName = isCustomProduct ? customProduct : (selectedProduct?.name || product);
+      const finalProductUnit = isCustomProduct ? productUnit : (selectedProduct?.unit || '');
+      
       const reportData = {
         userId: user.uid,
         userEmail: user.email,
-        product: product,
-        productName: selectedProduct?.name || product,
+        product: finalProduct,
+        productName: finalProductName,
+        productUnit: finalProductUnit,
+        isCustomProduct,
         shop: selectedShop.name,
         category: selectedShop.category || 'Unknown',
         price: parseFloat(price),
@@ -268,6 +281,9 @@ const Report = () => {
       
       // Reset form
       setProduct('');
+      setCustomProduct('');
+      setProductUnit('');
+      setIsCustomProduct(false);
       setPrice('');
       setImage(null);
       setImagePreview(null);
@@ -476,8 +492,121 @@ const Report = () => {
             </div>
           )}
 
+          {/* Product Selection Options */}
+          <div className="shelf-item" style={{ marginBottom: '20px' }}>
+            <div className="item-details">
+              <h3>🛍️ Product Selection</h3>
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCustomProduct(false);
+                    setCustomProduct('');
+                    setProductUnit('');
+                  }}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '12px',
+                    border: isCustomProduct ? '2px solid #e9ecef' : '2px solid #007bff',
+                    background: isCustomProduct ? '#f8f9fa' : 'linear-gradient(135deg, #007bff, #0056b3)',
+                    color: isCustomProduct ? '#6c757d' : 'white',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  📦 Choose from List
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCustomProduct(true);
+                    setProduct('');
+                  }}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '12px',
+                    border: !isCustomProduct ? '2px solid #e9ecef' : '2px solid #28a745',
+                    background: !isCustomProduct ? '#f8f9fa' : 'linear-gradient(135deg, #28a745, #1e7e34)',
+                    color: !isCustomProduct ? '#6c757d' : 'white',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  ✏️ Enter Custom Product
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Custom Product Input */}
+          {isCustomProduct && (
+            <div className="shelf-item" style={{ marginBottom: '20px' }}>
+              <div className="item-details">
+                <h3>✏️ Custom Product Details</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '12px' }}>
+                  <div>
+                    <label style={{ 
+                      display: 'block', 
+                      marginBottom: '8px', 
+                      fontWeight: '600',
+                      color: '#495057'
+                    }}>
+                      Product Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={customProduct}
+                      onChange={(e) => setCustomProduct(e.target.value)}
+                      placeholder="e.g., Apple iPhone, Basmati Rice, etc."
+                      required={isCustomProduct}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '2px solid #e9ecef',
+                        fontSize: '1rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#007bff'}
+                      onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ 
+                      display: 'block', 
+                      marginBottom: '8px', 
+                      fontWeight: '600',
+                      color: '#495057'
+                    }}>
+                      Unit/Size *
+                    </label>
+                    <input
+                      type="text"
+                      value={productUnit}
+                      onChange={(e) => setProductUnit(e.target.value)}
+                      placeholder="e.g., 1kg, 500ml, 1 piece, per liter"
+                      required={isCustomProduct}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '2px solid #e9ecef',
+                        fontSize: '1rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = '#007bff'}
+                      onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Product Selection by Category */}
-          {Object.entries(productCategories).map(([categoryName, products]) => (
+          {!isCustomProduct && Object.entries(productCategories).map(([categoryName, products]) => (
             <div key={categoryName} className="shelf-item" style={{ marginBottom: '20px' }}>
               <div className="item-details">
                 <h3>📦 {categoryName}</h3>
@@ -507,7 +636,7 @@ const Report = () => {
           ))}
 
           {/* Price Input */}
-          {product && (
+          {(product || (isCustomProduct && customProduct && productUnit)) && (
             <div className="shelf-item" style={{ marginBottom: '20px' }}>
               <div className="item-details">
                 <h3>💰 Enter Price</h3>
@@ -531,7 +660,7 @@ const Report = () => {
                     }}
                   />
                   <span style={{ fontSize: '0.9rem', color: '#6c757d' }}>
-                    {allProducts.find(p => p.id === product)?.unit}
+                    {isCustomProduct ? productUnit : allProducts.find(p => p.id === product)?.unit}
                   </span>
                 </div>
               </div>
@@ -539,10 +668,18 @@ const Report = () => {
           )}
 
           {/* Image Upload */}
-          {product && price && (
+          {(product || (isCustomProduct && customProduct)) && price && (
             <div className="shelf-item" style={{ marginBottom: '20px' }}>
               <div className="item-details">
-                <h3>📷 Bill Photo (Optional)</h3>
+                <h3>📷 Upload Bill or Product Photo</h3>
+                <p style={{ 
+                  fontSize: '0.9rem', 
+                  color: '#6c757d', 
+                  marginBottom: '16px',
+                  lineHeight: '1.4'
+                }}>
+                  📋 Upload bill receipt or product photo to help verify pricing and build community trust
+                </p>
                 <div 
                   className={`file-upload-area ${dragActive ? 'dragover' : ''}`}
                   onDragEnter={handleDrag}
@@ -552,12 +689,14 @@ const Report = () => {
                   onClick={() => document.getElementById('file-input').click()}
                   style={{
                     marginTop: '12px',
-                    padding: '24px',
-                    border: '2px dashed #e9ecef',
-                    borderRadius: '12px',
+                    padding: '32px 24px',
+                    border: dragActive ? '2px dashed #007bff' : '2px dashed #e9ecef',
+                    borderRadius: '16px',
                     textAlign: 'center',
                     cursor: 'pointer',
-                    background: dragActive ? '#f8f9fa' : '#ffffff'
+                    background: dragActive ? 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)' : 'rgba(255, 255, 255, 0.8)',
+                    transition: 'all 0.3s ease',
+                    boxShadow: dragActive ? '0 4px 20px rgba(0, 123, 255, 0.15)' : '0 2px 8px rgba(0, 0, 0, 0.05)'
                   }}
                 >
                   {imagePreview ? (
@@ -566,34 +705,68 @@ const Report = () => {
                         src={imagePreview} 
                         alt="Preview" 
                         style={{ 
-                          maxWidth: '200px', 
-                          maxHeight: '200px', 
-                          borderRadius: '8px',
-                          marginBottom: '12px'
+                          maxWidth: '250px', 
+                          maxHeight: '250px', 
+                          borderRadius: '12px',
+                          marginBottom: '16px',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
                         }} 
                       />
                       <div>
                         <button 
                           type="button" 
-                          className="action-btn"
                           onClick={(e) => {
                             e.stopPropagation();
                             removeImage();
                           }}
-                          style={{ background: '#dc3545', color: 'white' }}
+                          style={{ 
+                            background: 'linear-gradient(135deg, #dc3545, #c82333)', 
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '0.9rem',
+                            fontWeight: '500',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
                         >
-                          Remove Image
+                          🗑️ Remove Image
                         </button>
                       </div>
                     </div>
                   ) : (
                     <div>
-                      <div style={{ fontSize: '3rem', marginBottom: '12px' }}>📷</div>
-                      <div style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '4px' }}>
-                        {dragActive ? 'Drop image here' : 'Click or drag image here'}
+                      <div style={{ 
+                        fontSize: '3.5rem', 
+                        marginBottom: '16px',
+                        background: 'linear-gradient(135deg, #007bff, #0056b3)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text'
+                      }}>
+                        📷
                       </div>
-                      <div style={{ fontSize: '0.9rem', color: '#6c757d' }}>
-                        JPG, PNG up to 5MB
+                      <div style={{ 
+                        fontSize: '1.2rem', 
+                        fontWeight: '600', 
+                        marginBottom: '8px',
+                        color: '#495057'
+                      }}>
+                        {dragActive ? '📥 Drop your photo here' : '📤 Upload Bill or Product Photo'}
+                      </div>
+                      <div style={{ 
+                        fontSize: '0.95rem', 
+                        color: '#6c757d',
+                        marginBottom: '4px'
+                      }}>
+                        Click here or drag & drop your image
+                      </div>
+                      <div style={{ 
+                        fontSize: '0.85rem', 
+                        color: '#adb5bd'
+                      }}>
+                        📋 Supports JPG, PNG • Max size: 5MB
                       </div>
                     </div>
                   )}
@@ -633,7 +806,7 @@ const Report = () => {
           )}
 
           {/* Submit Button */}
-          {selectedShop && product && price && (
+          {selectedShop && (product || (isCustomProduct && customProduct && productUnit)) && price && (
             <div style={{ textAlign: 'center', marginTop: '24px' }}>
               <button 
                 type="submit" 

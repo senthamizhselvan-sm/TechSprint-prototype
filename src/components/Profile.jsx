@@ -198,6 +198,27 @@ const Profile = () => {
               Trust Score: {stats.trustScore.toFixed(1)}/5.0
             </div>
           </div>
+          <button 
+            onClick={handleLogout}
+            style={{ 
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '8px 16px',
+              fontSize: '0.9rem',
+              fontWeight: '500',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => e.target.style.background = '#c82333'}
+            onMouseOut={(e) => e.target.style.background = '#dc3545'}
+          >
+            🚪 Logout
+          </button>
         </div>
       </div>
 

@@ -89,11 +89,20 @@ VITE_GEMINI_API_KEY = AIzaSyDOniiRw-n33175yjuCankaREwsGiOQFEU
 2. Wait for build to complete (usually 2-3 minutes)
 3. Your app will be available at: https://your-project-name.vercel.app
 
-## Step 3: Post-Deployment Configuration
+## Step 3: Post-Deployment Configuration (CRITICAL)
 
-### 3.1 Update Firebase Settings
-1. Go to Firebase Console > Authentication > Authorized Domains
-2. Add your Vercel domain: `your-project-name.vercel.app`
+### 3.1 Update Firebase Authorized Domains (REQUIRED)
+🚨 **This step is MANDATORY or authentication will fail!**
+
+1. Go to Firebase Console: https://console.firebase.google.com
+2. Select your project: `price-fixing-detector`
+3. Navigate to: **Authentication → Settings → Authorized domains**
+4. Click **"Add domain"**
+5. Add your Vercel domain: `tech-sprint-prototype.vercel.app`
+   (Replace with your actual Vercel domain)
+6. Click **Save**
+
+**Note**: If you get a custom domain later, add that too.
 
 ### 3.2 Update Cloudinary Settings (if needed)
 1. Go to Cloudinary Console > Settings > Security
